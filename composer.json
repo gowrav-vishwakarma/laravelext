@@ -1,0 +1,16 @@
+{
+    "name": "gvs/laravelext",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gowrav Vishwakarma",
+            "email": "gowravvishwakarma@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload":{
+        "psr-4":{"LE\\" : "src/"}
+    }
+}
