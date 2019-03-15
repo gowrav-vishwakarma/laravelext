@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Taken from repository as a collection to Extension from 
- * https://github.com/lesichkovm/laravel-advanced-route
+ * This class is taken from lesichkovm's repository as a collection to Extensions from lesichkovm
+ * 
  * TODO: Add a few more features
  */
 
