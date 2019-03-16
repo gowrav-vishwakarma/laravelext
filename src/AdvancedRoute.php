@@ -21,7 +21,14 @@ class AdvancedRoute {
     private static $httpMethods = ['any', 'get', 'post', 'put', 'patch', 'delete'];
     private static $methodNameAtStartOfStringPattern = null;
 
-    public static function controller($path, $controllerClassName) {
+    /**
+     * AdvanceRoute::controller('path','controllerName',['name'=>'foo','condition'=[],'middleware'='','prefix'=>''])
+     * @param  [type] $path                This is sort of url list like if is it 'employee', Route will check 'employee/*' to defined controller
+     * @param  [type] $controllerClassName controller class
+     * @param  array  $options             pass name,prefix, middlewere or conditions as array keys
+     * @return [type]                      [description]
+     */
+    public static function controller($path, $controllerClassName, $options=[]) {
         if( class_exists($controllerClassName) ) {
             $class = new ReflectionClass($controllerClassName);
         } else {
@@ -78,8 +85,23 @@ class AdvancedRoute {
             $httpMethod = null;
             foreach (self::$httpMethods as $httpMethod) {
                 if (self::stringStartsWith($methodName, $httpMethod)) {
-                    Route::$httpMethod($slug_path, $controllerClassName . '@' . $methodName);
+                    $routeObj = Route::$httpMethod($slug_path, $controllerClassName . '@' . $methodName);
+                    if (isset($options['prefix'])) {
+                        $routeObj->prefix($options['prefix']);
+                    }
 
+                    if (isset($options['condition'])) {
+                        $routeObj->where($options['condition']);
+                    }
+
+                    if (isset($options['middleware'])) {
+                        $routeObj->middleware($options['middleware']);
+                    }
+
+                    if (isset($options['name'])) {
+                        $routeObj->name($options['name']);
+                    }
+                    
                     $route = new \stdClass();
                     $route->httpMethod = $httpMethod;
                     $route->prefix = sprintf("Route::%-4s('%s',", $httpMethod, $slug_path);
