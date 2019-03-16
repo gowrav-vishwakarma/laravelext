@@ -101,7 +101,7 @@ class AdvancedRoute {
                     if (isset($options['name'])) {
                         $routeObj->name($options['name']);
                     }
-                    
+
                     $route = new \stdClass();
                     $route->httpMethod = $httpMethod;
                     $route->prefix = sprintf("Route::%-4s('%s',", $httpMethod, $slug_path);
@@ -123,6 +123,7 @@ class AdvancedRoute {
                 $route->httpMethod = 'any';
                 $route->prefix = sprintf("Route::%-4s('%s',", 'any', $slug_path);
                 $route->target = $controllerClassName . '@' . $methodName;
+                $route->options = $options
                 $routes[] = $route;
         }
 
@@ -136,7 +137,7 @@ class AdvancedRoute {
      *
      * Example:
      * [
-     *     '/personal' => 'PersonalController',
+     *     '/personal' => ['PersonalController',['name'=>'','prefix'=>'','middleware' ...]],
      *     '/news'     => 'NewsController',
      *     ...
      * ]
@@ -145,7 +146,12 @@ class AdvancedRoute {
      */
     public static function controllers(array $routes) {
         foreach ($routes as $path => $controllerClassName) {
-            static::controller($path, $controllerClassName);
+            if(is_array($controllerClassName)){
+                $_controllerClassName = array_shift($controllerClassName);
+                static::controller($path, $_controllerClassName, $controllerClassName);
+            }else{
+                static::controller($path, $controllerClassName);
+            }
         }
     }
 
