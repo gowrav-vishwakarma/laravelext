@@ -123,7 +123,7 @@ class AdvancedRoute {
                 $route->httpMethod = 'any';
                 $route->prefix = sprintf("Route::%-4s('%s',", 'any', $slug_path);
                 $route->target = $controllerClassName . '@' . $methodName;
-                $route->options = $options
+                $route->options = $options;
                 $routes[] = $route;
         }
 
