@@ -3,6 +3,13 @@
 /**
  * Extended class for AdvancedRoute for Laravel
  * by Gowrav Vishwakarma
+ *
+ * Use:
+ * AdvanceRoute::controller('path','controllerName',['name'=>'foo','condition'=[],'middleware'='','prefix'=>''])
+ * will get 'path/*' to get mapped to controllerName, function name must be prefixed with one of
+ * 'get', 'post', 'put', 'delete', 'patch' or 'any' to get reflect method like
+ *
+ * function getABC() => path/abc can be used with get method now
  * 
  * Taken from repository as a collection to Extension from 
  * https://github.com/lesichkovm/laravel-advanced-route
