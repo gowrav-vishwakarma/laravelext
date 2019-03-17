@@ -1,9 +1,12 @@
 <?php
 
 /**
+ * Extended class for AdvancedRoute for Laravel
+ * by Gowrav Vishwakarma
+ * 
  * Taken from repository as a collection to Extension from 
  * https://github.com/lesichkovm/laravel-advanced-route
- * TODO: Add a few more features
+ * 
  */
 
 class AdvancedRoute {
