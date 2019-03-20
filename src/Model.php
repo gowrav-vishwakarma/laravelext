@@ -27,20 +27,25 @@ class Model extends EModel {
 
 
 	public $validations	= null;
+	public $validator = null;
 
+	public function __construct(array $attributes = [])
+		if($this->validations && is_array($this->validations)) {
+			$this->validator = \Validator::make($this->toArray(), $this->validations);
+		}
+		parent::__construct($attributes);
+	}
 
 	public function save(array $options = []){
-		if($this->validations && is_array($this->validations)) {
-			$validator = \Validator::make($this->toArray(), $this->validations);
-
-	        if ($validator->fails()) {
-	        	dd($validator->errors());
-	            // return redirect('post/create')
-	            //             ->withErrors($validator)
-	            //             ->withInput();
-	        }
-		}
+		if(!$this->isValidated()) dd($this->validator->errors());
 		parent::save($options);
+	}
+
+	function isValidated(){
+		if($this->validator) {
+	        return !$this->validator->fails();
+		}
+		return true;
 	}
 
 	// ======= Active InActive based scopes ===========//
